@@ -15,6 +15,9 @@
 # !!!!!WINDOWS ONLY CURRENTLY!!!!!
 # for linux set currpath to os.path.join(os.sep, 'usr', 'lib')
 
+
+# you can plop this into your root dir if you set currpath to os.path.dirname(os.path.realpath(__file__))
+
 # TODO: make it not asstastically slow
 # TODO: add finer controls, and add generalizations for search_string
 
