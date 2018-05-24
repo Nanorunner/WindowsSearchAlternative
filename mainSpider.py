@@ -30,7 +30,7 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", type = str, help = "Use the following strings for the following modes:\n\tbyname: searches for files by name\n\tintext: searches in .txt and .docx files for a substring\n\tbyext: searches by file extension")
-    parser.add_argument("search_string", type = str, help = "String to search by.")
+    parser.add_argument("search_strings", type = list, help = "Array of string(s) to search by.")
     parser.add_argument("drive", type = str, help = "Drive to search")
     args = parser.parse_args()
     currpath = os.path.join(args.drive, os.sep, 'sourcedir')
@@ -40,15 +40,19 @@ if __name__ == "__main__":
         for root, dirs, files in os.walk(currpath):
             # walk through files in dir
             for name in files:
-                # if name exists or is part of a file name spit out file path
-                subsstrExists = str(name).find(args.search_string)
-                if (subsstrExists != -1):
+                flag = 0
+                for i in args.search_strings:
+                    # if name exists or is part of a file name spit out file path
+                    subsstrExists = str(name).find(i)
+                    if (subsstrExists == -1):
+                        flag = 1
+                if (flag != 0):
                     print(root + "/" + str(name))
     # searches by file extension
     if (args.mode == "byext"):
         for root, dirs, files in os.walk(currpath):
             for name in files:
-                if name.endswith(args.search_string):
+                if name.endswith(args.search_strings[0]):
                     print(root + "/" + str(name))
     # searches inside .docx and .txt files
     if (args.mode == "intext"):
@@ -63,8 +67,13 @@ if __name__ == "__main__":
                         docTextList.append(paragraph.text)
                     # condense to single string
                     docText = " ".join(docTextList)
-                    subsstrExists = docText.find(args.search_string)
-                    if (subsstrExists != -1):
+                    flag = 0
+                    for i in args.search_strings:
+                        # if name exists or is part of a file name spit out file path
+                        subsstrExists = docText.find(i)
+                        if (subsstrExists == -1):
+                            flag = 1
+                    if (flag != 0):
                         print(root + "/" + str(name))
                 # essentially the same but for .txt files
                 elif name.endswith(".txt"):
@@ -73,6 +82,12 @@ if __name__ == "__main__":
                     for line in currTxt:
                         txtTextList.append(line)
                     txtText = " ".join(txtTextList)
-                    subsstrExists = txtText.find(args.search_string)
-                    if (subsstrExists != -1):
+                    subsstrExists = txtText.find(args.search_strings)
+                    flag = 0
+                    for i in args.search_strings:
+                        # if name exists or is part of a file name spit out file path
+                        subsstrExists = txtText.find(i)
+                        if (subsstrExists == -1):
+                            flag = 1
+                    if (flag != 0):
                         print(root + "/" + str(name))
