@@ -69,7 +69,6 @@ if __name__ == "__main__":
                     docText = " ".join(docTextList)
                     flag = 0
                     for i in args.search_strings:
-                        # if name exists or is part of a file name spit out file path
                         subsstrExists = docText.find(i)
                         if (subsstrExists == -1):
                             flag = 1
@@ -85,7 +84,6 @@ if __name__ == "__main__":
                     subsstrExists = txtText.find(args.search_strings)
                     flag = 0
                     for i in args.search_strings:
-                        # if name exists or is part of a file name spit out file path
                         subsstrExists = txtText.find(i)
                         if (subsstrExists == -1):
                             flag = 1
